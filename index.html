@@ -59,6 +59,63 @@
     </style>
   </head>
   <body>
+    <div
+      id="music-overlay"
+      style="
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <button
+        id="start-music-btn"
+        style="
+          font-size: 1.5rem;
+          padding: 20px 40px;
+          background: #e75480;
+          color: #fff;
+          border: none;
+          border-radius: 20px;
+          box-shadow: 0 2px 8px #ee9ca7;
+          cursor: pointer;
+        "
+      >
+        Bấm để bắt đầu & nghe nhạc 🎵
+      </button>
+    </div>
+    <button
+      id="music-toggle"
+      style="
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 20;
+        padding: 10px 18px;
+        font-size: 1.1rem;
+        background: #fff0f6;
+        color: #e75480;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px #ee9ca7;
+        cursor: pointer;
+      "
+    >
+      Bật nhạc 🎵
+    </button>
+    <audio id="bg-music" loop>
+      <source
+        src="https://raw.githubusercontent.com/images244/images/main/cdmrr06u03.mp3"
+        type="audio/mpeg"
+      />
+      Trình duyệt của bạn không hỗ trợ audio.
+    </audio>
     <div class="center-message">Chúc BTS-con 1/6 vui vẻ:Đ</div>
     <script>
       // List of direct image links from Google Drive
@@ -130,6 +187,35 @@
       }
 
       setInterval(createHeartOrImage, 300);
+
+      // Music toggle logic
+      const music = document.getElementById("bg-music");
+      const btn = document.getElementById("music-toggle");
+      let isPlaying = false;
+      const overlay = document.getElementById("music-overlay");
+      const startBtn = document.getElementById("start-music-btn");
+      // Hide main UI until user starts
+      document.querySelector(".center-message").style.display = "none";
+      btn.style.display = "none";
+      // Start music and show UI on button click
+      startBtn.addEventListener("click", () => {
+        music.play();
+        btn.textContent = "Tắt nhạc 🔇";
+        isPlaying = true;
+        overlay.style.display = "none";
+        document.querySelector(".center-message").style.display = "";
+        btn.style.display = "";
+      });
+      btn.addEventListener("click", () => {
+        if (isPlaying) {
+          music.pause();
+          btn.textContent = "Bật nhạc 🎵";
+        } else {
+          music.play();
+          btn.textContent = "Tắt nhạc 🔇";
+        }
+        isPlaying = !isPlaying;
+      });
     </script>
   </body>
 </html>
